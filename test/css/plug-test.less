@@ -25,7 +25,7 @@ body {
 @keyframes vmblockopenanime {
     0% {
         height: 0px;
-        margin: 0px;
+        margin: 0 0;
     }
     100% {
         height: 36px;
@@ -93,7 +93,7 @@ body {
     background-color: #f2f2f0;
 }
 
-.vm-group-container > .vm-group:last-child:before {
+.vm-group-container > .vm-group:last-child:after {
     content: " ";
     display: inline-block;
     position: absolute;
@@ -101,6 +101,17 @@ body {
     left: -23px;
     width: 4px;
     height: 50%;
+    background-color: #f2f2f0;
+}
+
+//chrome IE 动画用 hack
+.vm-group-container .vm-group:last-child .vm-block.open_anime:last-child:before {
+    position: absolute;
+    content: " ";
+    left: -52px;
+    top: 0px;
+    width: 6px;
+    height: 68px;
     background-color: #f2f2f0;
 }
 
