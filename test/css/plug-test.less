@@ -2,12 +2,17 @@ body {
     font-family: Microsoft Yahei UI Light;
 }
 
-.vm-group {
-    //    position: absolute;
+.vm-group-container {
     position: relative;
     display: inline-block;
     background-color: white;
     padding: 0 28px;
+    z-index: 10;
+}
+
+.vm-group {
+    display: inline-block;
+    position: relative;
 }
 
 .vm-block {
@@ -49,13 +54,16 @@ body {
 
 .vm-block-child {
     position: absolute;
-    left: 152px;
+    left: 150px;
     top: 16px;
+    transform: translateY(-50%);
+    border-left: #909090 solid 2px;
+    padding-left: 20px;
 }
 
 .vm-block > .vm-block-child:before {
     position: absolute;
-    top: 0;
+    top: 50%;
     left: -40px;
     content: " ";
     display: inline-block;
@@ -64,25 +72,15 @@ body {
     background-color: #909090;
 }
 
-.vm-group-container {
-    position: relative;
-    transform: translateY(-50%);
-}
-
-.vm-group-container > .vm-group {
+.vm-block-child > .vm-group {
     margin-top: 20px;
 }
 
-.vm-group-container> .vm-group:first-child {
+.vm-block-child> .vm-group:first-child {
     margin-top: 0;
 }
 
-.vm-block-child .vm-group-container {
-    border-left: #909090 solid 2px;
-    padding-left: 20px;
-}
-
-.vm-group-container > .vm-group:first-child:before {
+.vm-block-child > .vm-group:first-child:before {
     content: " ";
     display: inline-block;
     position: absolute;
@@ -93,7 +91,7 @@ body {
     background-color: #f2f2f0;
 }
 
-.vm-group-container > .vm-group:last-child:after {
+.vm-block-child > .vm-group:last-child:after {
     content: " ";
     display: inline-block;
     position: absolute;
@@ -105,7 +103,7 @@ body {
 }
 
 //chrome IE 动画用 hack
-.vm-group-container .vm-group:last-child .vm-block.open_anime:last-child:before {
+.vm-block-child .vm-group:last-child .vm-block.open_anime:last-child:before {
     position: absolute;
     content: " ";
     left: -52px;
@@ -115,7 +113,7 @@ body {
     background-color: #f2f2f0;
 }
 
-.vm-block-left-line {
+.vm-block-child> .vm-group >.vm-block-line {
     position: absolute;
     top: 50%;
     left: -20px;
@@ -124,18 +122,65 @@ body {
     background-color: #909090;
 }
 
-//.vm-block-child:before {
-//    position: absolute;
-//    display: inline-block;
-//    top: 16px;
-//    right: -55px;
-//    width: 55px;
-//    height: 2px;
-//    background-color: #909090;
-//    content: " ";
-//}
-//.vm-block-child>.vm-container {
-//        position: absolute;
-//        top: 11px;
-//        right: -223px;
-//}
+//下一组
+.vm-nexts {
+    position: absolute;
+    margin-top: 20px;
+    border-top: #909090 solid 2px;
+    white-space: nowrap;
+}
+
+.vm-nexts:before {
+    position: absolute;
+    content: " ";
+    display: block;
+    top: -30px;
+    left: 84px;
+    width: 2px;
+    height: 30px;
+    background-color: #909090;
+}
+
+.vm-nexts >.vm-group {
+    margin: 20px 10px;
+    vertical-align: top;
+}
+
+.vm-nexts >.vm-group:first-child {
+    margin-left: 0;
+}
+
+.vm-nexts >.vm-group:last-child {
+    margin-right: 0;
+}
+
+.vm-nexts > .vm-group > .vm-block-line {
+    position: absolute;
+    top: -20px;
+    left: 84px;
+    width: 2px;
+    height: 20px;
+    background-color: #909090;
+}
+
+.vm-nexts > .vm-group:first-child:before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: -23px;
+    left: 0px;
+    width: 50%;
+    height: 4px;
+    background-color: #f2f2f0;
+}
+
+.vm-nexts > .vm-group:last-child:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: -23px;
+    right: -2px;
+    width: 50%;
+    height: 4px;
+    background-color: #f2f2f0;
+}
