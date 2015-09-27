@@ -7,6 +7,7 @@ body {
   background-color: white;
   padding: 0 28px;
   z-index: 10;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.07);
 }
 .vm-group {
   display: inline-block;
@@ -22,6 +23,7 @@ body {
   line-height: 36px;
   color: white;
   text-align: center;
+  background-color: #aaa;
 }
 @-webkit-keyframes vmblockopenanime {
   0% {
@@ -54,6 +56,15 @@ body {
 }
 .vm-block.bl {
   background-color: #77b3de;
+}
+.vm-block.gr {
+  background-color: #72c380;
+}
+.vm-block.re {
+  background-color: #df6164;
+}
+.vm-block.or {
+  background-color: #eba446;
 }
 .vm-block-child {
   position: absolute;

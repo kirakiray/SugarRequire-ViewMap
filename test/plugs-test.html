@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>插件测试</title>
+    <link href="css/plug-test.css" type="text/css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f0;
+        }
+        
+        .temple_main {
+            margin: 200px;
+        }
+    </style>
+    <script src="js/jquery-2.1.3.js"></script>
+    <script src="js/sr-viewmap-view.js"></script>
+</head>
+
+<body>
+    <div class="temple_main"></div>
+</body>
+<script>
+    var srgroup = new SrViewGroup();
+    var sr1 = srgroup.addBlock('sr1')
+    sr1.changeStatus('succeed');
+    srgroup.addBlock('sr2').changeStatus('safe');
+    srgroup.addBlock('sr3').changeStatus('safe');
+
+
+    var sr1_1srgroupp = sr1.appendGroup();
+    sr1_1srgroupp.addBlock('sr1_1').changeStatus('succeed');
+    sr1_1srgroupp.addBlock('sr1_2').changeStatus('safe');
+    
+    var sr1_2srgroupp = sr1.appendGroup();
+    sr1_2srgroupp.addBlock('sr2_1').changeStatus('succeed');
+    sr1_2srgroupp.addBlock('sr2_2').changeStatus('safe');
+
+    var n1group = srgroup.addNext();
+    n1group.addBlock('n1_1').changeStatus('error');
+    n1group.addBlock('n1_2').changeStatus('safe');
+
+    var n2group = srgroup.addNext();
+    n2group.addBlock('n2_1').changeStatus('warn');
+    n2group.addBlock('n2_2').changeStatus('safe');
+
+    $('.temple_main').append(srgroup.element);
+</script>
+
+</html>
