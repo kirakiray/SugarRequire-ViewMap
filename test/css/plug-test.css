@@ -2,21 +2,25 @@ body {
   font-family: Microsoft Yahei UI Light;
 }
 .vm-group-container {
+  width: 112px;
   position: relative;
   display: inline-block;
   background-color: white;
-  padding: 0 28px;
+  padding: 10px 28px;
   z-index: 10;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.07);
+  white-space: normal;
 }
 .vm-group {
   display: inline-block;
   position: relative;
 }
 .vm-block {
+  vertical-align: top;
+  display: inline-block;
   position: relative;
   font-size: 14px;
-  margin: 20px 0;
+  margin: 10px 0;
   padding: 0 10px;
   width: 92px;
   height: 36px;
@@ -28,21 +32,21 @@ body {
 @-webkit-keyframes vmblockopenanime {
   0% {
     height: 0px;
-    margin: 0 0;
+    margin: 0;
   }
   100% {
     height: 36px;
-    margin: 20px 0;
+    margin: 10px 0;
   }
 }
 @keyframes vmblockopenanime {
   0% {
     height: 0px;
-    margin: 0 0;
+    margin: 0;
   }
   100% {
     height: 36px;
-    margin: 20px 0;
+    margin: 10px 0;
   }
 }
 .vm-block.open_anime {
@@ -112,15 +116,15 @@ body {
   height: 50%;
   background-color: #f2f2f0;
 }
-.vm-block-child .vm-group:last-child .vm-block.open_anime:last-child:before {
-  position: absolute;
-  content: " ";
-  left: -52px;
-  top: 0px;
-  width: 6px;
-  height: 68px;
-  background-color: #f2f2f0;
-}
+/*.vm-block-child .vm-group:last-child .vm-block.open_anime:last-child:before {
+    position: absolute;
+    content: " ";
+    left: -52px;
+    top: 0px;
+    width: 6px;
+    height: 68px;
+    background-color: #f2f2f0;
+}*/
 .vm-block-child > .vm-group > .vm-block-line {
   position: absolute;
   top: 50%;

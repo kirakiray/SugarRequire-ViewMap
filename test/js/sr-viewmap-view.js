@@ -1,11 +1,57 @@
 (function($, Global) {
 
+    //冒泡事件机
+    var PopEvent = function() {
+        this._map = {};
+        this._parentEvent = "";
+    };
+    PopEvent.fn = PopEvent.prototype;
+    PopEvent.fn._get = function(eventName) {
+        return this._map[eventName] || (this._map[eventName] = {
+            eves: []
+        });
+    };
+
+    //注册事件
+    PopEvent.fn.on = function(eventName, fun, data) {
+        //先获取事件对象
+        var eventObj = this._get(eventName);
+
+        //挂载函数
+        eventObj.eves.push({
+            _call: fun,
+            data: data
+        });
+    };
+
+    //触发事件
+    PopEvent.fn.trigger = function(eventName, data) {
+        //先获取事件对象
+        var eventObj = this._get(eventName);
+
+        eventObj.eves.forEach(function(e) {
+            e._call({
+                name: eventName,
+                data: e.data
+            }, data);
+        });
+
+        //触发父事件
+        this._parentEvent && this._parentEvent.trigger(eventName, data);
+    };
+
+    //监听事件
+    PopEvent.fn.monite = function(popevent) {
+        popevent._parentEvent = this;
+    };
+
     var SrViewGroup = function() {
+        PopEvent.apply(this, arguments);
         this.element = $('<div class="vm-group"><div class="vm-block-line"></div><div class="vm-group-container"></div></div>');
         this.$container = this.element.find('.vm-group-container');
         this.blocks = [];
     };
-    SrViewGroup.fn = SrViewGroup.prototype;
+    SrViewGroup.fn = SrViewGroup.prototype = Object.create(PopEvent.prototype);
 
     //添加block
     SrViewGroup.fn.addBlock = function(text) {
@@ -32,9 +78,10 @@
 
 
     var SrViewBlock = function(text) {
+        PopEvent.apply(this, arguments);
         this.element = $('<div class="vm-block"><div class="vm-block-content">' + text + '</div></div>');
     };
-    SrViewBlock.fn = SrViewBlock.prototype;
+    SrViewBlock.fn = SrViewBlock.prototype = Object.create(PopEvent.prototype);
 
     //添加子级Group
     SrViewBlock.fn.appendGroup = function() {

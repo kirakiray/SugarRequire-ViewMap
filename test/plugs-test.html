@@ -25,11 +25,10 @@
 </body>
 <script>
     var srgroup = new SrViewGroup();
-    var sr1 = srgroup.addBlock('sr1')
+    var sr1 = srgroup.addBlock('sr1');
     sr1.changeStatus('succeed');
     srgroup.addBlock('sr2').changeStatus('safe');
     srgroup.addBlock('sr3').changeStatus('safe');
-
 
     var sr1_1srgroupp = sr1.appendGroup();
     sr1_1srgroupp.addBlock('sr1_1').changeStatus('succeed');
