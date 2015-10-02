@@ -53,10 +53,15 @@
         this._height = 20;
         var _this = this;
         //添加增高事件
-        this.on('changeHeight', function(e, hei) {
-            _this._height += hei;
+        this.on('changeHeight', function(e) {
+            var rHei = 20;
+            _this.blocks.map(function(ele) {
+                rHei += 56;
+                rHei += ele._space;
+            });
+            _this._height = rHei;
             if (_this._parentBlock) {
-                _this._parentBlock.trigger('changeHeight', hei);
+                _this._parentBlock.trigger('changeBlockSpace');
             }
         });
     };
@@ -69,7 +74,7 @@
         this.$container.append(viewBlock.element);
         viewBlock.parentGroup = this;
         //当前高度添加
-        this.trigger('changeHeight', 56);
+        this.trigger('changeHeight');
         return viewBlock;
     };
 
@@ -90,7 +95,7 @@
 
     var SrViewBlock = function(text) {
         PopEvent.apply(this, arguments);
-        this._height = 0;
+        this._space = 0;
         this.element = $('<div class="vm-block"><div class="vm-block-content">' + text + '</div></div>');
     };
     SrViewBlock.fn = SrViewBlock.prototype = Object.create(PopEvent.prototype);
@@ -104,21 +109,29 @@
         var childViewGroup = new SrViewGroup();
         this.$childContainer.append(childViewGroup.element);
         childViewGroup._parentBlock = this;
+
+        if (!this.childGroup) {
+            this.childGroup = [];
+        }
+        this.childGroup.push(childViewGroup);
+
         var _this = this;
         //设置改变高度事件
-        this.on('changeHeight', function(e, hei) {
-            _this._height += hei;
-            _this.updataSpace();
-            if (_this.parentGroup) {
-                _this.parentGroup.trigger('changeHeight', hei);
-            }
+        this.on('changeBlockSpace', function(e) {
+            var tHei = -40;
+            _this.childGroup.map(function(ele) {
+                tHei += ele._height + 20;
+            });
+            _this._space = tHei;
+            _this.reBlockSpace();
+            _this.parentGroup.trigger('changeHeight');
         });
         return childViewGroup;
     };
 
     //刷新间距
-    SrViewBlock.fn.updataSpace = function() {
-        var t = (this._height) / 2;
+    SrViewBlock.fn.reBlockSpace = function() {
+        var t = (this._space) / 2;
         this.element.css({
             'margin-top': t + "px",
             'margin-bottom': t + "px"
