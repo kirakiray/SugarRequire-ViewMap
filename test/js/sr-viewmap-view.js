@@ -57,7 +57,7 @@
             var rHei = 20;
             _this.blocks.map(function(ele) {
                 rHei += 56;
-                rHei += ele._space;
+                rHei += ele._spaceTop + ele._spaceBottom;
             });
             _this._height = rHei;
             if (_this._parentBlock) {
@@ -95,7 +95,9 @@
 
     var SrViewBlock = function(text) {
         PopEvent.apply(this, arguments);
-        this._space = 0;
+        //this._space = 0;
+        this._spaceTop = 0;
+        this._spaceBottom = 0;
         this.element = $('<div class="vm-block"><div class="vm-block-content">' + text + '</div></div>');
     };
     SrViewBlock.fn = SrViewBlock.prototype = Object.create(PopEvent.prototype);
@@ -122,7 +124,8 @@
             _this.childGroup.map(function(ele) {
                 tHei += ele._height + 20;
             });
-            _this._space = tHei;
+            //_this._space = tHei;
+            _this._spaceBottom = _this._spaceTop = tHei / 2;
             _this.reBlockSpace();
             _this.parentGroup.trigger('changeHeight');
         });
@@ -131,10 +134,10 @@
 
     //刷新间距
     SrViewBlock.fn.reBlockSpace = function() {
-        var t = (this._space) / 2;
+        //var t = (this._space) / 2;
         this.element.css({
-            'margin-top': t + "px",
-            'margin-bottom': t + "px"
+            'margin-top': this._spaceTop + "px",
+            'margin-bottom': this._spaceBottom + "px"
         });
     };
 

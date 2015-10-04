@@ -27,7 +27,7 @@
     var srgroup = new SrViewGroup();
 
     $('.temple_main').append(srgroup.element);
-    
+
     var sr1block = srgroup.addBlock('sr1');
     sr1block.changeStatus('succeed');
 
@@ -57,6 +57,10 @@
     var sr2_1srgroupp = sr2.appendGroup();
     sr2_1srgroupp.addBlock('sr2_1').changeStatus('succeed');
     sr2_1srgroupp.addBlock('sr2_2').changeStatus('safe');
+
+    var sr2_1grouppNext = sr2_1srgroupp.addNext();
+    sr2_1grouppNext.addBlock('sr2_1srgroupp1').changeStatus('error');
+    sr2_1grouppNext.addBlock('sr2_1srgroupp2').changeStatus('safe');
 
 
 
