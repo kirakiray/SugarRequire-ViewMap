@@ -3,7 +3,6 @@
     //冒泡事件机
     var PopEvent = function() {
         this._map = {};
-        this._parentEvent = "";
     };
     PopEvent.fn = PopEvent.prototype;
     PopEvent.fn._get = function(eventName) {
@@ -35,35 +34,16 @@
                 data: e.data
             }, data);
         });
-
-        //触发父事件
-        //this._parentEvent && this._parentEvent.trigger(eventName, data);
     };
-
-    //监听事件
-    //    PopEvent.fn.monite = function(popevent) {
-    //        popevent._parentEvent = this;
-    //    };
 
     var SrViewGroup = function() {
         PopEvent.apply(this, arguments);
         this.element = $('<div class="vm-group"><div class="vm-block-line"></div><div class="vm-group-container"></div></div>');
         this.$container = this.element.find('.vm-group-container');
         this.blocks = [];
-        this._height = 20;
-        var _this = this;
-        //添加增高事件
-        this.on('changeHeight', function(e) {
-            var rHei = 20;
-            _this.blocks.map(function(ele) {
-                rHei += 56;
-                rHei += ele._spaceTop + ele._spaceBottom;
-            });
-            _this._height = rHei;
-            if (_this._parentBlock) {
-                _this._parentBlock.trigger('changeBlockSpace');
-            }
-        });
+        this.nextGroups = [];
+        this.height = 20;
+        this.marBottom = 0;
     };
     SrViewGroup.fn = SrViewGroup.prototype = Object.create(PopEvent.prototype);
 
@@ -73,9 +53,46 @@
         this.blocks.push(viewBlock);
         this.$container.append(viewBlock.element);
         viewBlock.parentGroup = this;
-        //当前高度添加
-        this.trigger('changeHeight');
+        //更新当前高度
+        this.reloadSizeInfo();
         return viewBlock;
+    };
+
+    //刷新group大小信息
+    SrViewGroup.fn.reloadSizeInfo = function() {
+        //更新group高度
+        var tHei = 20;
+        this.blocks.forEach(function(e) {
+            tHei += 36 + e.space * 2 + e.spaceBottom;
+        });
+        this.height = tHei;
+
+        if (this.prevGroup) {
+            //更新前级块大小
+            var theLargest = 0;
+            this.prevGroup.nextGroups.forEach(function(e) {
+                var eTotalHei = e.height + e.marBottom;
+                (eTotalHei > theLargest) && (theLargest = eTotalHei)
+            });
+            this.prevGroup.marBottom = theLargest + 42;
+
+            //刷新上一组UI数据
+            this.prevGroup.reloadSizeInfo();
+        } else if (this.parentBlock) {
+            var parentBlock = this.parentBlock;
+
+            //更新间距
+            parentBlock.space = this.height / 2;
+
+            //更新下距离
+            //parentBlock.spaceBottom = this.marBottom;
+
+            //更新父级块大小
+            parentBlock.reSize();
+
+            //更新父级组大小
+            parentBlock.parentGroup.reloadSizeInfo();
+        }
     };
 
     //添加下一级Group 
@@ -83,7 +100,6 @@
         var nextGroup = new SrViewGroup();
         nextGroup.prevGroup = this;
         if (!this.$nextContainer) {
-            this.nextGroups = [];
             this.$nextContainer = $('<div class="vm-nexts" />');
             this.element.append(this.$nextContainer);
         }
@@ -95,10 +111,9 @@
 
     var SrViewBlock = function(text) {
         PopEvent.apply(this, arguments);
-        //this._space = 0;
-        this._spaceTop = 0;
-        this._spaceBottom = 0;
         this.element = $('<div class="vm-block"><div class="vm-block-content">' + text + '</div></div>');
+        this.space = 10;
+        this.spaceBottom = 0;
     };
     SrViewBlock.fn = SrViewBlock.prototype = Object.create(PopEvent.prototype);
 
@@ -110,7 +125,7 @@
         }
         var childViewGroup = new SrViewGroup();
         this.$childContainer.append(childViewGroup.element);
-        childViewGroup._parentBlock = this;
+        childViewGroup.parentBlock = this;
 
         if (!this.childGroup) {
             this.childGroup = [];
@@ -118,26 +133,28 @@
         this.childGroup.push(childViewGroup);
 
         var _this = this;
-        //设置改变高度事件
-        this.on('changeBlockSpace', function(e) {
-            var tHei = -40;
-            _this.childGroup.map(function(ele) {
-                tHei += ele._height + 20;
-            });
-            //_this._space = tHei;
-            _this._spaceBottom = _this._spaceTop = tHei / 2;
-            _this.reBlockSpace();
-            _this.parentGroup.trigger('changeHeight');
-        });
         return childViewGroup;
     };
 
-    //刷新间距
-    SrViewBlock.fn.reBlockSpace = function() {
-        //var t = (this._space) / 2;
+    //更新UI
+    SrViewBlock.fn.reSize = function() {
+        var cHei = -20;
+        var lastId = this.childGroup.length - 1;
+        var _this = this;
+        this.childGroup.forEach(function(e, i) {
+            if (lastId == i) {
+                //如果是最后一个
+                _this.spaceBottom = e.marBottom;
+                cHei += e.height + 20;
+            } else {
+                cHei += e.height + 20 + e.marBottom;
+                //不是最后一个，则将当前的group添加margin-bottom
+                e.element.css('margin-bottom', e.marBottom + 'px');
+            }
+        });
         this.element.css({
-            'margin-top': this._spaceTop + "px",
-            'margin-bottom': this._spaceBottom + "px"
+            "margin-top": cHei / 2 + "px",
+            "margin-bottom": cHei / 2 + this.spaceBottom + "px"
         });
     };
 

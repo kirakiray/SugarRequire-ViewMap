@@ -36,6 +36,19 @@
     sr1_1_block.changeStatus('succeed');
     sr1_1group.addBlock('sr1_1b').changeStatus('safe');
 
+    var sr1_1groupNext = sr1_1group.addNext();
+    sr1_1groupNext.addBlock('sr1_1group1').changeStatus('error');
+    sr1_1groupNext.addBlock('sr1_1group2').changeStatus('safe');
+
+    var sr1_1groupNext3 = sr1_1groupNext.addNext();
+    sr1_1groupNext3.addBlock('next3_group1').changeStatus('error');
+    sr1_1groupNext3.addBlock('next3_group2').changeStatus('safe');
+
+    var sr1_1groupNext2 = sr1_1group.addNext();
+    sr1_1groupNext2.addBlock('next2_group1').changeStatus('error');
+    sr1_1groupNext2.addBlock('next2_group2').changeStatus('safe');
+    sr1_1groupNext2.addBlock('next2_group3').changeStatus('safe');
+
     var sr1_2group = sr1block.appendGroup();
     var sr1_2_1block = sr1_2group.addBlock('sr1_2a');
     sr1_2_1block.changeStatus('succeed');
@@ -50,6 +63,9 @@
     sr1_1_1_1group.addBlock('sr1_1_1_1').changeStatus('safe');
     sr1_1_1_1group.addBlock('sr1_1_1_2').changeStatus('safe');
 
+    var sr1_1_1groupNext = sr1_1_1group.addNext();
+    sr1_1_1groupNext.addBlock('sr1_1_1group1').changeStatus('succeed');
+    sr1_1_1groupNext.addBlock('sr1_1_1group2').changeStatus('safe');
 
     var sr2 = srgroup.addBlock('sr2');
     sr2.changeStatus('safe');
@@ -57,10 +73,6 @@
     var sr2_1srgroupp = sr2.appendGroup();
     sr2_1srgroupp.addBlock('sr2_1').changeStatus('succeed');
     sr2_1srgroupp.addBlock('sr2_2').changeStatus('safe');
-
-    var sr2_1grouppNext = sr2_1srgroupp.addNext();
-    sr2_1grouppNext.addBlock('sr2_1srgroupp1').changeStatus('error');
-    sr2_1grouppNext.addBlock('sr2_1srgroupp2').changeStatus('safe');
 
 
 
