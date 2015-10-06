@@ -13,6 +13,19 @@ body {
     white-space: normal;
 }
 
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fadein {
+    animation: fadein ease .5s;
+}
+
 .vm-group {
     display: inline-block;
     position: relative;

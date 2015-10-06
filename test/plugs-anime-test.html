@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>动画测试</title>
+    <link href="css/plug-test.css" type="text/css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f0;
+        }
+        
+        .temple_main {
+            margin: 200px;
+        }
+    </style>
+    <script src="js/jquery-2.1.3.js"></script>
+    <script src="js/sr-viewmap-view.js"></script>
+</head>
+
+<body>
+    <div class="temple_main"></div>
+</body>
+<script>
+    var g1 = new SrViewGroup();
+    $('.temple_main').append(g1.element);
+
+    g1.addBlock('g1_b1');
+    g1.addBlock('g1_b2', function() {
+        
+    });
+</script>
+
+</html>

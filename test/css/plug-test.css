@@ -11,6 +11,26 @@ body {
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.07);
   white-space: normal;
 }
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.fadein {
+  -webkit-animation: fadein ease .5s;
+          animation: fadein ease .5s;
+}
 .vm-group {
   display: inline-block;
   position: relative;

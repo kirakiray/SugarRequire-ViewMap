@@ -1,4 +1,11 @@
 (function($, Global) {
+    //public function
+    var animationendCall = function(dom, callback) {
+        dom.addEventListener('webkitAnimationEnd', callback, false);
+        dom.addEventListener('msAnimationEnd', callback, false);
+        dom.addEventListener('animationend', callback, false);
+    };
+
 
     //冒泡事件机
     var PopEvent = function() {
@@ -59,8 +66,8 @@
     SrViewGroup.fn = SrViewGroup.prototype = Object.create(PopEvent.prototype);
 
     //添加block
-    SrViewGroup.fn.addBlock = function(text) {
-        var viewBlock = new SrViewBlock(text);
+    SrViewGroup.fn.addBlock = function(text, callback) {
+        var viewBlock = new SrViewBlock(text, callback);
 
         this.blocks.push(viewBlock);
         this.$container.append(viewBlock.element);
@@ -152,7 +159,7 @@
             var lastNextsId = this.prevGroup.nextGroups.length - 1;
             this.prevGroup.nextGroups.forEach(function(e, i) {
                 if (i != lastNextsId && e._place != 1) {
-                    e.element.css('margin-right', (e._place - 1) * 216 + 'px');
+                    e.element.css('margin-right', (e._place - 1) * 200 + 16 + 'px');
                 }
             });
         }
@@ -177,9 +184,17 @@
     };
 
 
-    var SrViewBlock = function(text) {
+    var SrViewBlock = function(text, callback) {
         PopEvent.apply(this, arguments);
-        this.element = $('<div class="vm-block"><div class="vm-block-content">' + text + '</div></div>');
+        if (!callback) {
+            this.element = $('<div class="vm-block"><div class="vm-block-content">' + text + '</div></div>');
+        } else {
+            var ele = this.element = $('<div class="vm-block open_anime"><div class="vm-block-content">' + text + '</div></div>');
+            animationendCall(ele[0], function() {
+                ele.removeClass('open_anime');
+                callback();
+            });
+        }
         this.space = 10;
         this.spaceBottom = 0;
     };

@@ -38,21 +38,52 @@
     sr1_1_block2.changeStatus('safe');
 
     var sr1_1groupNext = sr1_1group.addNext();
-    sr1_1groupNext.addBlock('sr1_1group1').changeStatus('error');
+    var s1_1_g1 = sr1_1groupNext.addBlock('sr1_1group1')
+    s1_1_g1.changeStatus('error');
     sr1_1groupNext.addBlock('sr1_1group2').changeStatus('safe');
+
+    var s1_1_g1_2 = s1_1_g1.appendGroup();
+    var s11_block = s1_1_g1_2.addBlock('s1_1_g1_2');
+    s11_block.changeStatus('safe');
+    s1_1_g1_2.addBlock('s1_1_g1_2').changeStatus('safe');
+
+    var s11_group = s11_block.appendGroup();
+    var s11block = s11_group.addBlock('s11_group');
+
+    var s11_group2 = s11_block.appendGroup();
+    s11_group2.addBlock('s11_group2');
+
+    var s11_group3 = s11block.appendGroup();
+    s11_group3.addBlock('s11_group3');
 
     var sr1_1groupNext3 = sr1_1groupNext.addNext();
     sr1_1groupNext3.addBlock('next3_group1').changeStatus('error');
     var next3_block2 = sr1_1groupNext3.addBlock('next3_group2');
     next3_block2.changeStatus('safe');
-    
+
+    var sr1_1groupNext4 = sr1_1groupNext.addNext();
+    sr1_1groupNext4.addBlock('next4_group1').changeStatus('error');
+    var next4_block2 = sr1_1groupNext4.addBlock('next4_group2');
+    next4_block2.changeStatus('safe');
+
+    var sr1_1groupNext5 = sr1_1groupNext.addNext();
+    sr1_1groupNext5.addBlock('next5_group1').changeStatus('error');
+    var next5_block2 = sr1_1groupNext5.addBlock('next5_group2');
+    next5_block2.changeStatus('safe');
+
     var next3_block2_group = next3_block2.appendGroup();
-    next3_block2_group.addBlock('n3_block2_g1').changeStatus('safe');
+    var n3_2_g1 = next3_block2_group.addBlock('n3_block2_g1');
+    n3_2_g1.changeStatus('safe');
     next3_block2_group.addBlock('n3_block2_g2').changeStatus('safe');
-    
+
     var next3_block3_group = next3_block2.appendGroup();
-    next3_block3_group.addBlock('n3_block3_g1').changeStatus('safe');
+    var n3_3_g1 = next3_block3_group.addBlock('n3_block3_g1');
+    n3_3_g1.changeStatus('safe');
     next3_block3_group.addBlock('n3_block3_g2').changeStatus('safe');
+
+    var n3_3_group = n3_2_g1.appendGroup();
+    n3_3_group.addBlock('n3_3_group1').changeStatus('error');
+    n3_3_group.addBlock('n3_3_group2').changeStatus('safe');
 
     var sr1_1groupNext2 = sr1_1group.addNext();
     sr1_1groupNext2.addBlock('next2_group1').changeStatus('error');
@@ -67,6 +98,11 @@
     var sr1_2_1block = sr1_2group.addBlock('sr1_2a');
     sr1_2_1block.changeStatus('succeed');
     sr1_2group.addBlock('sr1_2b').changeStatus('safe');
+
+    var sr1_2group2 = sr1_2group.addNext();
+    sr1_2group2.addBlock('sr1_2group2_1').changeStatus('succeed');
+    sr1_2group2.addBlock('sr1_2group2_2').changeStatus('safe');
+
 
     var sr1_1_1group = sr1_1_block.appendGroup();
     var sr1_1_1block = sr1_1_1group.addBlock('sr1_1_1');
