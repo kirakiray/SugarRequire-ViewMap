@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Microsoft Yahei UI light;
+}
+header {
+  display: block;
+  height: 58px;
+  background-color: #de6262;
+}
+.header_container {
+  height: 52px;
+  line-height: 52px;
+  background-color: #373737;
+}
+.logo {
+  float: left;
+  height: 52px;
+  padding-left: 25px;
+  color: #cdcdcd;
+}
+nav {
+  float: right;
+}
+.nav_block {
+  position: relative;
+  display: block;
+  float: left;
+  width: 100px;
+  height: 52px;
+  line-height: 52px;
+  font-size: 14px;
+  text-align: center;
+  color: #ddd;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-transition: all ease .5s;
+          transition: all ease .5s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.nav_block:before {
+  position: absolute;
+  left: 0;
+  top: 52px;
+  content: " ";
+  display: inline-block;
+  z-index: 1;
+  width: 100px;
+  height: 52px;
+  background-color: #272727;
+  border-radius: 52px 52px 0 0;
+  -webkit-transition: all ease .5s;
+          transition: all ease .5s;
+}
+.nav_block > span {
+  position: relative;
+  z-index: 2;
+}
+.nav_block.nav_active {
+  color: white;
+  cursor: default;
+}
+.nav_block.nav_active:before {
+  top: 0;
+  border-radius: 0;
+}
+.github {
+  display: block;
+  float: right;
+  width: 70px;
+  height: 52px;
+  line-height: 65px;
+  text-align: center;
+  color: white;
+}
