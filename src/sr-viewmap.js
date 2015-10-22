@@ -16,13 +16,24 @@ sr.extend(function(baseResources, R, Require, GatherEvent) {
     //替换
     var oldsplitter = R.splitter;
     R.splitter = function(requireObj) {
-        requireObj._ViewMap = {
-            groupId: getGroupID()
-        };
+        if (!requireObj._ViewMap) {
+            requireObj._ViewMap = {
+                groupId: getGroupID()
+            };
+        } else {
+            requireObj._ViewMap.groupId = getGroupID();
+        }
         //继承旧方法
         oldsplitter.apply(R, arguments);
         requireObj._rEvent.on('adddely', function(e) {
-            var parentRequireObj = e.data;
+            var childRequireObj = e.data;
+            if (!childRequireObj._ViewMap) {
+                childRequireObj._ViewMap = {
+                    parentRequireObj: requireObj
+                };
+            } else {
+                childRequireObj._ViewMap.parentRequireObj = requireObj;
+            }
             console.log(e);
         });
     };
