@@ -1,61 +1,77 @@
 //导出数据用viewmap插件
 sr.extend(function(baseResources, R, Require, GatherEvent) {
     //function
-    var groupData = [];
+    groupData = [];
     var groupID = 0;
     var getGroupID = function() {
         return groupID++;
     };
 
-    var scriptData = [];
-    var scriptId = 1;
+    scriptData = [];
+    var scriptId = 0;
     var getScriptId = function() {
         return scriptId++;
     };
 
     //替换
-    var oldsplitter = R.splitter;
-    R.splitter = function(requireObj) {
-        if (!requireObj._ViewMap) {
-            requireObj._ViewMap = {
-                groupId: getGroupID()
-            };
-        } else {
-            requireObj._ViewMap.groupId = getGroupID();
-        }
-        //继承旧方法
-        oldsplitter.apply(R, arguments);
-        requireObj._rEvent.on('adddely', function(e) {
-            var childRequireObj = e.data;
-            if (!childRequireObj._ViewMap) {
-                childRequireObj._ViewMap = {
-                    parentRequireObj: requireObj
-                };
-            } else {
-                childRequireObj._ViewMap.parentRequireObj = requireObj;
-            }
-            console.log(e);
-        });
-    };
 
     var oldscriptAgent = R.scriptAgent;
-    R.scriptAgent = function(url, requireObj) {
+    R.scriptAgent = function(url, requireObj, inputUrl) {
         var scriptEvent = oldscriptAgent.apply(R, arguments);
-        if (scriptEvent.ViewMap) {
-            if (scriptEvent.ViewMap.scriptId) {
-                //记录数据
-                var scriptid = scriptEvent.ViewMap.newScriptId = getScriptId();
-                scriptData[scriptid] = scriptEvent;
-            }
-        } else {
-            //记录数据
-            scriptEvent._ViewMap = {
-                scriptId: getScriptId()
-            };
-            scriptData[scriptEvent._ViewMap.scriptId] = scriptEvent;
-        }
-        console.log(requireObj, scriptEvent);
+
+        //记录基础数据
+        var sid = getScriptId();
+        var sdata = {
+            url: url,
+            input: inputUrl,
+            start: new Date().getTime(),
+            eventObj: scriptEvent,
+            groupid: requireObj._ViewMap.groupId,
+            childGroupId: []
+        };
+        scriptData[sid] = sdata;
+
+        scriptEvent.on('adddely', function(e) {
+            e.data._rEvent.one('setGroupId', function(e2) {
+                sdata.childGroupId.push(e2.data);
+            });
+        });
+
+        //记录完成时间
+        scriptEvent.one('done', function(e) {
+            sdata.end = new Date().getTime();
+            sdata.type = baseResources.dataMap[url].type;
+        });
+
         return scriptEvent;
     };
 
+    var oldsplitter = R.splitter;
+    R.splitter = function(requireObj) {
+        //获取groupid
+        var groupid = getGroupID();
+        var gdata = requireObj._ViewMap = {
+            groupId: groupid,
+            startTime: new Date().getTime(),
+            afterRequire: []
+        };
+
+        //设置相应的group
+        groupData[groupid] = gdata;
+
+        //触发设置id事件
+        requireObj._rEvent.trigger('setGroupId', groupid);
+
+        //判断后代requireObj并设置groupid
+        if (requireObj._subRequire.length) {
+            requireObj._subRequire.forEach(function(e) {
+                e._rEvent.on('setGroupId', function(e2) {
+                    requireObj._ViewMap.afterRequire.push(e2.data);
+                });
+            });
+        }
+
+        //继承旧方法
+        oldsplitter.apply(R, arguments);
+    };
 });
