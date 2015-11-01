@@ -1,20 +1,19 @@
 //导出数据用viewmap插件
 sr.extend(function(baseResources, R, Require, GatherEvent) {
-    //function
-    groupData = [];
+    //data
+    var requireData = [];
     var groupID = 0;
     var getGroupID = function() {
         return groupID++;
     };
 
-    scriptData = [];
+    var scriptData = [];
     var scriptId = 0;
     var getScriptId = function() {
         return scriptId++;
     };
 
     //替换
-
     var oldscriptAgent = R.scriptAgent;
     R.scriptAgent = function(url, requireObj, inputUrl) {
         var scriptEvent = oldscriptAgent.apply(R, arguments);
@@ -25,7 +24,7 @@ sr.extend(function(baseResources, R, Require, GatherEvent) {
             url: url,
             input: inputUrl,
             start: new Date().getTime(),
-            eventObj: scriptEvent,
+            //eventObj: scriptEvent,
             groupid: requireObj._ViewMap.groupId,
             childGroupId: []
         };
@@ -57,7 +56,7 @@ sr.extend(function(baseResources, R, Require, GatherEvent) {
         };
 
         //设置相应的group
-        groupData[groupid] = gdata;
+        requireData[groupid] = gdata;
 
         //触发设置id事件
         requireObj._rEvent.trigger('setGroupId', groupid);
@@ -73,5 +72,17 @@ sr.extend(function(baseResources, R, Require, GatherEvent) {
 
         //继承旧方法
         oldsplitter.apply(R, arguments);
+    };
+
+    //导出方法
+    sr.ViewMap = {
+        data: {
+            v: "1.0",
+            r: requireData,
+            s: scriptData
+        },
+        export: function() {
+            return JSON.stringify(this.data);
+        }
     };
 });
