@@ -1,0 +1,128 @@
+.logo {
+    display: inline-block;
+    // width: 230px;
+    height: 52px;
+    padding-left: 25px;
+    color: #cdcdcd;
+    user-select: none;
+    cursor: default;
+    text-align: center;
+}
+
+.logo:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.logo_img {
+    float: left;
+    display: inline-block;
+    position: relative;
+    margin: 15px 10px 0 0;
+    width: 34px;
+    height: 22px;
+}
+
+.logo_ib1,
+.logo_ib2,
+.logo_ib3 {
+    position: absolute;
+    display: inline-block;
+    width: 11px;
+    height: 8px;
+}
+
+.logo_ib1 {
+    top: 7px;
+    left: 0px;
+    background-color: #77b3de;
+}
+
+.logo_ib2 {
+    right: 0px;
+    top: 0px;
+    background-color: #de6262;
+}
+
+.logo_ib3 {
+    right: 0px;
+    top: 14px;
+    background-color: #72c380;
+}
+
+.logo_l1,
+.logo_l2,
+.logo_l3,
+.logo_l4 {
+    position: absolute;
+    background-color: #f2f2f0;
+}
+
+.logo_l1,
+.logo_l3,
+.logo_l4 {
+    left: 11px;
+    top: 10px;
+    width: 5px;
+    height: 2px;
+}
+
+.logo_l2 {
+    left: 16px;
+    top: 3px;
+    width: 2px;
+    height: 16px;
+}
+
+.logo_l3 {
+    left: 18px;
+    top: 3px;
+}
+
+.logo_l4 {
+    left: 18px;
+    top: 17px;
+}
+
+.logo_content {
+    width: 186px;
+    display: inline-block;
+    float: left;
+    transition: width ease .8s;
+}
+
+//logo动画
+@keyframes logo_block_anime {
+    0% {
+        transform: scale(1, 1);
+    }
+    25% {
+        transform: scale(1.2, 1.2);
+    }
+    50% {
+        transform: scale(1, 1);
+    }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+.logo:hover,
+.logo.hasanime {
+    .logo_ib1,
+    .logo_ib2,
+    .logo_ib3 {
+        animation: logo_block_anime ease 2s infinite;
+    }
+    .logo_ib2 {
+        animation-delay: .2s;
+    }
+    .logo_ib3 {
+        animation-delay: .4s;
+    }
+}
+
+.logo_img.hastransition > * {
+    transition: all ease .5s;
+}

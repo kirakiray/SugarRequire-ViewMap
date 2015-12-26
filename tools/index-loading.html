@@ -4,30 +4,51 @@
 <head>
     <meta charset="UTF-8">
     <title>SugarRequire-ViewMap</title>
+    <script src="js/jquery-2.1.3.js"></script>
     <script src="js/sr.min.js"></script>
     <link href="css/index.css" type="text/css" rel="stylesheet" />
-    <style>
-        .loading_block {}
-    </style>
 </head>
 
 <body>
-    <header style="height:893px;border-bottom-width: 0px;transition: all ease .5s;">
-        <div class="logo" style="margin: 400px 0 0 400px;">
-            <div class="logo_img">
-                <span class="logo_ib1"></span>
-                <span class="logo_ib2"></span>
-                <span class="logo_ib3"></span>
-                <span class="logo_l1"></span>
-                <span class="logo_l2"></span>
-                <span class="logo_l3"></span>
-                <span class="logo_l4"></span>
+    <header style="position:fixed;width:100%;height:100%;border-bottom-width: 0px;transition: all ease .5s;display:flex;align-items: center; justify-content: center;">
+        <div class="logo hasanime">
+            <div class="logo_img hastransition">
+                <span class="logo_ib1" style="background-color:#aaa;"></span>
+                <span class="logo_ib2" style="background-color:#aaa;width:0px;"></span>
+                <span class="logo_ib3" style="background-color:#aaa;width:0px;"></span>
+                <span class="logo_l1" style="width:0px;"></span>
+                <span class="logo_l2" style="height:0px;"></span>
+                <span class="logo_l3" style="width:0px;"></span>
+                <span class="logo_l4" style="width:0px;"></span>
             </div>
-            <div class="logo_content">SugarRequire-ViewMap</div>
+            <div class="logo_content" style="width:70px;">
+                <span class="logo_end_centent" style="display:none;"> SugarRequire-ViewMap </span>
+                <span class="logo_content_loading">加载中...</span>
+            </div>
         </div>
     </header>
     <div class="main">
     </div>
 </body>
+<script>
+require('js/viewControl/headerLoading').done(function(headerLoading) {
+    console.log(headerLoading);
+    aaa = headerLoading;
+
+    var pp = 0;
+
+    function loadNext() {
+        pp += 9;
+        if (pp < 100) {
+            headerLoading.process(pp);
+            setTimeout(loadNext, 200);
+        } else {
+            headerLoading.process(100);
+        }
+    };
+
+    loadNext();
+});
+</script>
 
 </html>

@@ -39,7 +39,6 @@ header {
 }*/
 .logo {
   display: inline-block;
-  width: 230px;
   height: 52px;
   padding-left: 25px;
   color: #cdcdcd;
@@ -48,6 +47,7 @@ header {
       -ms-user-select: none;
           user-select: none;
   cursor: default;
+  text-align: center;
 }
 .logo:after {
   display: block;
@@ -115,7 +115,70 @@ header {
   top: 17px;
 }
 .logo_content {
+  width: 186px;
   display: inline-block;
+  float: left;
+  -webkit-transition: width ease .8s;
+          transition: width ease .8s;
+}
+@-webkit-keyframes logo_block_anime {
+  0% {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+  }
+  25% {
+    -webkit-transform: scale(1.2, 1.2);
+            transform: scale(1.2, 1.2);
+  }
+  50% {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+  }
+}
+@keyframes logo_block_anime {
+  0% {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+  }
+  25% {
+    -webkit-transform: scale(1.2, 1.2);
+            transform: scale(1.2, 1.2);
+  }
+  50% {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+  }
+}
+.logo:hover .logo_ib1,
+.logo.hasanime .logo_ib1,
+.logo:hover .logo_ib2,
+.logo.hasanime .logo_ib2,
+.logo:hover .logo_ib3,
+.logo.hasanime .logo_ib3 {
+  -webkit-animation: logo_block_anime ease 2s infinite;
+          animation: logo_block_anime ease 2s infinite;
+}
+.logo:hover .logo_ib2,
+.logo.hasanime .logo_ib2 {
+  -webkit-animation-delay: .2s;
+          animation-delay: .2s;
+}
+.logo:hover .logo_ib3,
+.logo.hasanime .logo_ib3 {
+  -webkit-animation-delay: .4s;
+          animation-delay: .4s;
+}
+.logo_img.hastransition > * {
+  -webkit-transition: all ease .5s;
+          transition: all ease .5s;
 }
 nav {
   float: right;
@@ -228,6 +291,7 @@ nav {
           transition: all ease .5s;
 }
 .left_tools:hover .left_tools_block {
+  margin-top: 6px;
   height: 28px;
   line-height: 28px;
 }
@@ -242,4 +306,36 @@ nav {
   line-height: 28px;
   padding: 0 10px;
   opacity: 1;
+}
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
